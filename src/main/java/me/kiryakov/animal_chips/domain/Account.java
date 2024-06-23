@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -16,13 +19,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AccountSequenceGenerator")
     @Column(name = "id")
     private Integer id;
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name", length = 50 )
+    @Column(name = "last_name" )
     private String lastName;
-    @Column(name = "email", length = 50)
+    @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
 
+    @OneToMany(mappedBy = "chipper")
+    List<Animal> animals = new ArrayList<Animal>();
 }

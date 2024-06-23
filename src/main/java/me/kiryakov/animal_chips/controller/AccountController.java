@@ -22,7 +22,7 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
     @PutMapping(path = "/{accountId}")
-    public AccountDTO updateById(@PathVariable @Min(1) Integer accountId, @RequestBody AccountDTO accountDTO) {
+    public AccountDTO updateById(@PathVariable @Min(1) Integer accountId, @RequestBody @Valid AccountDTO accountDTO) {
         return accountService.editAccount(accountId, accountDTO);
     }
     @DeleteMapping(path = "/{accountId}")

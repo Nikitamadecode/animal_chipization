@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.List;
 @SequenceGenerator(name = "AnimalsSequenceGenerator", sequenceName = "animals_seq", allocationSize = 1)
 public class Animal {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AnimalSequenceGenerator")
     @Column(name = "id")
     private Long id;
     @Column(name = "weight")
@@ -26,9 +27,9 @@ public class Animal {
     @Column(name = "height")
     private Float height;
     @Column(name = "gender")
-    private String gender;
+    private Gender gender;
     @Column(name = "life_status")
-    private String lifeStatus;
+    private LifeStatus lifeStatus;
     @Column(name = "chipping_date_time")
     private LocalDateTime chippingDateTime;
     @Column(name = "death_date_time")
@@ -46,6 +47,8 @@ public class Animal {
     @JoinTable(name = "animal_type_rel",
             joinColumns = @JoinColumn(name = "animal_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_type_id"))
-    private List<AnimalType> animalTypes;
+    private List<AnimalType> animalTypes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.REMOVE)
+    private List<VisitedLocation> visitedLocations = new ArrayList<>();
 }

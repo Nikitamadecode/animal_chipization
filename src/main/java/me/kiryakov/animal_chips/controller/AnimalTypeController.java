@@ -1,11 +1,16 @@
 package me.kiryakov.animal_chips.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import me.kiryakov.animal_chips.dto.AnimalTypeDTO;
 import me.kiryakov.animal_chips.service.AnimalTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
 @RestController
 @RequestMapping(path = "/animals/types")
 public class AnimalTypeController {
@@ -14,8 +19,9 @@ public class AnimalTypeController {
 
 
     @PostMapping
-    public AnimalTypeDTO addAnimalType(@RequestBody AnimalTypeDTO dto) {
-        return animalTypeService.create(dto);
+    public ResponseEntity<AnimalTypeDTO> addAnimalType(@RequestBody @Valid AnimalTypeDTO dto) {
+        AnimalTypeDTO dto1 = animalTypeService.create(dto);
+        return new ResponseEntity<>(dto1, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{typeId}")
@@ -24,7 +30,7 @@ public class AnimalTypeController {
     }
 
     @PutMapping(path = "/{typeId}")
-    public AnimalTypeDTO updateAnimalTypeById(@PathVariable @Min(1) Long typeId, @RequestBody AnimalTypeDTO animalTypeDTO) {
+    public AnimalTypeDTO updateAnimalTypeById(@PathVariable @Min(1) Long typeId, @RequestBody @Valid AnimalTypeDTO animalTypeDTO) {
         return animalTypeService.editAnimalType(typeId, animalTypeDTO);
     }
 

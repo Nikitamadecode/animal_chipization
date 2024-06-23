@@ -26,6 +26,10 @@ public class AnimalMapper {
         animal.getAnimalTypes().forEach(type -> types.add(type.getId()));
         animalDTO.setAnimalTypes(types);
 
+        List<Long> visitedLocations = new ArrayList<>();
+        animal.getVisitedLocations().forEach(location -> visitedLocations.add(location.getId()));
+        animalDTO.setVisitedLocations(visitedLocations);
+
         return animalDTO;
     }
 }
